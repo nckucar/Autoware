@@ -485,7 +485,7 @@ int main(int argc, char** argv)
   current_pose_pub = nh.advertise<geometry_msgs::PoseStamped>("/current_pose", 1000);
 
   ros::Subscriber param_sub = nh.subscribe("config/ndt_mapping", 10, param_callback);
-  ros::Subscriber output_sub = nh.subscribe("config/ndt_mapping_output", 10, output_callback);
+  ros::Subscriber output_sub = nh.subscribe("config/gnss_mapping_output", 10, output_callback);
   ros::Subscriber gnss_sub = nh.subscribe("gnss_pose", 100000, gnss_callback);
   delay(1000); // wait a second for data sync
   ros::Subscriber points_sub = nh.subscribe("points_raw", 100000, points_callback);

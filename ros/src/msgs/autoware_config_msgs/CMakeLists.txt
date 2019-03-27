@@ -24,6 +24,7 @@ add_message_files(
   ConfigLaneSelect.msg
   ConfigLaneStop.msg
   ConfigLatticeVelocitySet.msg
+  ConfigGnssMappingOutput.msg
   ConfigNdtMapping.msg
   ConfigNdtMappingOutput.msg
   ConfigNdt.msg

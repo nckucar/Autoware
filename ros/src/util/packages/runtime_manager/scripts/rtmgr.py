@@ -1354,3 +1354,78 @@ class MyDialogWaypointLoader(wx.Dialog):
 		event.Skip()
 
 # end of class MyDialogNdtMapping
+
+class MyDialogGnssMapping(wx.Dialog):
+	def __init__(self, *args, **kwds):
+		# begin wxGlade: MyDialogGnssMapping.__init__
+		kwds["style"] = wx.CAPTION
+		wx.Dialog.__init__(self, *args, **kwds)
+		self.panel_v = wx.ScrolledWindow(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+		self.static_line_1 = wx.StaticLine(self, wx.ID_ANY)
+		self.text_ctrl_path = wx.TextCtrl(self, wx.ID_ANY, "")
+		self.button_ref_path = wx.Button(self, wx.ID_ANY, _("Ref"))
+		self.radio_btn_filter_resolution = wx.RadioButton(self, wx.ID_ANY, _("Filter Resolution"))
+		self.text_ctrl_filter_resolution = wx.TextCtrl(self, wx.ID_ANY, _("0.2"))
+		self.radio_btn_original = wx.RadioButton(self, wx.ID_ANY, _("Original"))
+		self.button_3 = wx.Button(self, wx.ID_ANY, _("PCD OUTPUT"))
+		self.static_line_2 = wx.StaticLine(self, wx.ID_ANY)
+		self.button_1 = wx.Button(self, wx.ID_ANY, _("Close"))
+
+		self.__set_properties()
+		self.__do_layout()
+
+		self.Bind(wx.EVT_BUTTON, self.OnRef, self.button_ref_path)
+		self.Bind(wx.EVT_RADIOBUTTON, self.OnRadio, self.radio_btn_filter_resolution)
+		self.Bind(wx.EVT_RADIOBUTTON, self.OnRadio, self.radio_btn_original)
+		self.Bind(wx.EVT_BUTTON, self.OnPcdOutput, self.button_3)
+		self.Bind(wx.EVT_BUTTON, self.OnOk, self.button_1)
+		# end wxGlade
+
+	def __set_properties(self):
+		# begin wxGlade: MyDialogGnssMapping.__set_properties
+		self.SetTitle(_("ndt_mapping"))
+		self.SetSize((352, 341))
+		self.panel_v.SetScrollRate(10, 10)
+		self.button_ref_path.SetMinSize((40, 29))
+		# end wxGlade
+
+	def __do_layout(self):
+		# begin wxGlade: MyDialogGnssMapping.__do_layout
+		sizer_30 = wx.BoxSizer(wx.VERTICAL)
+		sizer_48 = wx.BoxSizer(wx.VERTICAL)
+		sizer_49 = wx.BoxSizer(wx.HORIZONTAL)
+		sizer_28_copy_1 = wx.BoxSizer(wx.HORIZONTAL)
+		sizer_30.Add(self.panel_v, 1, wx.EXPAND, 0)
+		sizer_30.Add(self.static_line_1, 0, wx.EXPAND, 0)
+		sizer_28_copy_1.Add(self.text_ctrl_path, 1, wx.LEFT | wx.TOP, 4)
+		sizer_28_copy_1.Add(self.button_ref_path, 0, wx.LEFT | wx.RIGHT | wx.TOP, 4)
+		sizer_48.Add(sizer_28_copy_1, 0, wx.ALL | wx.EXPAND, 4)
+		sizer_49.Add(self.radio_btn_filter_resolution, 0, wx.ALL, 4)
+		sizer_49.Add(self.text_ctrl_filter_resolution, 0, wx.ALL, 4)
+		sizer_49.Add(self.radio_btn_original, 0, wx.ALL, 4)
+		sizer_48.Add(sizer_49, 0, wx.ALL | wx.EXPAND, 4)
+		sizer_48.Add(self.button_3, 0, wx.ALIGN_CENTER_HORIZONTAL | wx.ALL, 4)
+		sizer_30.Add(sizer_48, 0, wx.EXPAND, 0)
+		sizer_30.Add(self.static_line_2, 0, wx.EXPAND, 0)
+		sizer_30.Add(self.button_1, 0, wx.ALIGN_CENTER_HORIZONTAL | wx.ALL, 4)
+		self.SetSizer(sizer_30)
+		self.Layout()
+		# end wxGlade
+
+	def OnRef(self, event):  # wxGlade: MyDialogGnssMapping.<event_handler>
+		print("Event handler 'OnRef' not implemented!")
+		event.Skip()
+
+	def OnRadio(self, event):  # wxGlade: MyDialogGnssMapping.<event_handler>
+		print("Event handler 'OnRadio' not implemented!")
+		event.Skip()
+
+	def OnPcdOutput(self, event):  # wxGlade: MyDialogGnssMapping.<event_handler>
+		print("Event handler 'OnPcdOutput' not implemented!")
+		event.Skip()
+
+	def OnOk(self, event):  # wxGlade: MyDialogGnssMapping.<event_handler>
+		print("Event handler 'OnOk' not implemented!")
+		event.Skip()
+
+# end of class MyDialogGnssMapping

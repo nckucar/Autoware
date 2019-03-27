@@ -18,7 +18,17 @@ subs :
         cmd  : roslaunch gnss_localizer gnss_mapping.launch
         param: gnss
         gui  :
-          stat_topic : [ gnss ]
+          dialog : MyDialogGnssMapping
+          dialog_width  : 350
+          dialog_height : 300
+          incremental_voxel_update:
+            depend : method_type
+            depend_bool : 'lambda v : v == 1'
+            flags : [ nl ]
+          use_odom:
+            flags : [ nl ]
+          imu_topic:
+            flags : [ nl ]
       - name : nmea2tfpose
         desc : nmea2tfpose desc sample
         cmd  : roslaunch gnss_localizer nmea2tfpose.launch

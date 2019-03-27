@@ -59,6 +59,7 @@ from decimal import Decimal
 from autoware_config_msgs.msg import ConfigSsd
 from autoware_config_msgs.msg import ConfigCarDpm
 from autoware_config_msgs.msg import ConfigPedestrianDpm
+from autoware_config_msgs.msg import ConfigGnssMappingOutput
 from autoware_config_msgs.msg import ConfigNdt
 from autoware_config_msgs.msg import ConfigNdtMapping
 from autoware_config_msgs.msg import ConfigApproximateNdtMapping
@@ -2700,6 +2701,55 @@ class MyDialogNdtMapping(rtmgr.MyDialogNdtMapping):
 		self.update_filename()
 		self.klass_msg = ConfigNdtMappingOutput
 		self.pub = rospy.Publisher('/config/ndt_mapping_output', self.klass_msg, queue_size=10)
+
+	def update_filename(self):
+		tc = self.text_ctrl_path
+		path = tc.GetValue()
+		(dn, fn) = os.path.split(path)
+		now = datetime.datetime.now()
+		fn = 'autoware-%02d%02d%02d.pcd' % (
+			now.year % 100, now.month, now.day)
+		path = os.path.join(dn, fn)
+		set_path(tc, path)
+
+	def OnRef(self, event):
+		tc = self.text_ctrl_path
+		file_dialog(self, tc, { 'path_type' : 'save' } )
+
+	def OnRadio(self, event):
+		v = self.radio_btn_filter_resolution.GetValue()
+		tc = self.text_ctrl_filter_resolution
+		tc.Enable(v)
+
+	def OnPcdOutput(self, event):
+		tc = self.text_ctrl_filter_resolution
+		v = tc.GetValue() if self.radio_btn_filter_resolution.GetValue() else '0.0'
+		msg = self.klass_msg()
+		msg.filename = self.text_ctrl_path.GetValue()
+		msg.filter_res = str_to_float(v)
+		self.pub.publish(msg)
+
+	def OnOk(self, event):
+		self.panel.detach_func()
+		self.EndModal(0)
+
+class MyDialogGnssMapping(rtmgr.MyDialogGnssMapping):
+	def __init__(self, *args, **kwds):
+		self.pdic = kwds.pop('pdic')
+		self.pdic_bak = self.pdic.copy()
+		self.gdic = kwds.pop('gdic')
+		self.prm = kwds.pop('prm')
+		rtmgr.MyDialogGnssMapping.__init__(self, *args, **kwds)
+		set_size_gdic(self)
+
+		parent = self.panel_v
+		frame = self.GetParent()
+		self.panel = ParamPanel(parent, frame=frame, pdic=self.pdic, gdic=self.gdic, prm=self.prm)
+		sizer_wrap((self.panel,), wx.VERTICAL, 1, wx.EXPAND, 0, parent)
+
+		self.update_filename()
+		self.klass_msg = ConfigGnssMappingOutput
+		self.pub = rospy.Publisher('/config/gnss_mapping_output', self.klass_msg, queue_size=10)
 
 	def update_filename(self):
 		tc = self.text_ctrl_path
