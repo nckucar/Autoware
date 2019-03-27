@@ -13,6 +13,12 @@ subs :
         param: gnss
         gui  :
           stat_topic : [ gnss ]
+      - name : gnss_mapping
+        desc : gnss_mapping desc sample
+        cmd  : roslaunch gnss_localizer gnss_mapping.launch
+        param: gnss
+        gui  :
+          stat_topic : [ gnss ]
       - name : nmea2tfpose
         desc : nmea2tfpose desc sample
         cmd  : roslaunch gnss_localizer nmea2tfpose.launch

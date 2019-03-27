@@ -1,0 +1,7 @@
+<launch>
+
+  <!-- rosrun gnss_localizer gnss_mapping  -->
+  <node pkg="lidar_localizer" type="queue_counter" name="queue_counter" output="screen"/>
+  <node pkg="gnss_localizer" type="gnss_mapping" name="gnss_mapping" output="screen"/>
+
+</launch>

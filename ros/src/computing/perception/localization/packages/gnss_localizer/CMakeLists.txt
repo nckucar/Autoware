@@ -2,15 +2,23 @@ cmake_minimum_required(VERSION 2.8.3)
 project(gnss_localizer)
 
 find_package(catkin REQUIRED COMPONENTS
+        PCL REQUIRED
         autoware_build_flags
         roscpp
         std_msgs
         nmea_msgs
         gnss
         tf
+        autoware_config_msgs
+        velodyne_pointcloud
+        ndt_cpu
+        ${PCL_OPENMP_PACKAGES}
         )
 
-catkin_package()
+catkin_package(
+        CATKIN_DEPENDS std_msgs velodyne_pointcloud autoware_config_msgs ndt_cpu ${PCL_OPENMP_PACKAGES}
+        DEPENDS PCL
+)
 
 SET(CMAKE_CXX_FLAGS "-O2 -g -Wall ${CMAKE_CXX_FLAGS}")
 
@@ -33,7 +41,11 @@ target_include_directories(nmea2tfpose PRIVATE nodes/nmea2tfpose ${catkin_INCLUD
 target_link_libraries(nmea2tfpose ${catkin_LIBRARIES})
 add_dependencies(nmea2tfpose ${catkin_EXPORTED_TARGETS})
 
-install(TARGETS nmea2tfpose fix2tfpose
+add_executable(gnss_mapping nodes/gnss_mapping/gnss_mapping.cpp)
+target_link_libraries(gnss_mapping ${catkin_LIBRARIES})
+add_dependencies(gnss_mapping ${catkin_EXPORTED_TARGETS})
+
+install(TARGETS nmea2tfpose fix2tfpose gnss_mapping
         ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
